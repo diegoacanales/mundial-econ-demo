@@ -2,50 +2,50 @@ import { useState, useMemo } from "react";
 import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine } from "recharts";
 
 const COUNTRIES = [
-  { name: "Brazil", flag: "🇧🇷", continent: "South America", fifaRank: 1, gdpPC: 10412, pop: 216, hdi: 0.760, gini: 48.9, lifeExp: 76 },
-  { name: "Argentina", flag: "🇦🇷", continent: "South America", fifaRank: 2, gdpPC: 13650, pop: 46, hdi: 0.842, gini: 41.4, lifeExp: 77 },
-  { name: "France", flag: "🇫🇷", continent: "Europe", fifaRank: 3, gdpPC: 44408, pop: 68, hdi: 0.903, gini: 31.6, lifeExp: 83 },
-  { name: "Spain", flag: "🇪🇸", continent: "Europe", fifaRank: 4, gdpPC: 32280, pop: 48, hdi: 0.905, gini: 33.0, lifeExp: 84 },
-  { name: "England", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", continent: "Europe", fifaRank: 5, gdpPC: 48913, pop: 56, hdi: 0.929, gini: 35.1, lifeExp: 81 },
-  { name: "Belgium", flag: "🇧🇪", continent: "Europe", fifaRank: 6, gdpPC: 51767, pop: 12, hdi: 0.937, gini: 27.2, lifeExp: 82 },
-  { name: "Netherlands", flag: "🇳🇱", continent: "Europe", fifaRank: 7, gdpPC: 57025, pop: 18, hdi: 0.946, gini: 28.1, lifeExp: 82 },
-  { name: "Portugal", flag: "🇵🇹", continent: "Europe", fifaRank: 8, gdpPC: 26780, pop: 10, hdi: 0.866, gini: 33.8, lifeExp: 82 },
-  { name: "Colombia", flag: "🇨🇴", continent: "South America", fifaRank: 9, gdpPC: 6630, pop: 52, hdi: 0.752, gini: 51.3, lifeExp: 77 },
-  { name: "Italy", flag: "🇮🇹", continent: "Europe", fifaRank: 10, gdpPC: 35657, pop: 59, hdi: 0.895, gini: 32.8, lifeExp: 84 },
-  { name: "Germany", flag: "🇩🇪", continent: "Europe", fifaRank: 11, gdpPC: 51384, pop: 84, hdi: 0.942, gini: 31.7, lifeExp: 81 },
-  { name: "Uruguay", flag: "🇺🇾", continent: "South America", fifaRank: 12, gdpPC: 21576, pop: 3.5, hdi: 0.830, gini: 39.7, lifeExp: 78 },
-  { name: "Japan", flag: "🇯🇵", continent: "Asia", fifaRank: 15, gdpPC: 33815, pop: 125, hdi: 0.920, gini: 32.9, lifeExp: 85 },
-  { name: "USA", flag: "🇺🇸", continent: "North America", fifaRank: 16, gdpPC: 80035, pop: 334, hdi: 0.921, gini: 39.8, lifeExp: 77 },
-  { name: "Mexico", flag: "🇲🇽", continent: "North America", fifaRank: 17, gdpPC: 12673, pop: 130, hdi: 0.758, gini: 45.4, lifeExp: 75 },
-  { name: "Senegal", flag: "🇸🇳", continent: "Africa", fifaRank: 20, gdpPC: 1712, pop: 18, hdi: 0.511, gini: 40.3, lifeExp: 68 },
-  { name: "South Korea", flag: "🇰🇷", continent: "Asia", fifaRank: 22, gdpPC: 32423, pop: 52, hdi: 0.929, gini: 31.4, lifeExp: 84 },
-  { name: "Nigeria", flag: "🇳🇬", continent: "Africa", fifaRank: 28, gdpPC: 2184, pop: 224, hdi: 0.535, gini: 35.1, lifeExp: 53 },
-  { name: "Australia", flag: "🇦🇺", continent: "Oceania", fifaRank: 24, gdpPC: 65100, pop: 26, hdi: 0.946, gini: 34.3, lifeExp: 84 },
+  { name: "Brasil", flag: "🇧🇷", continent: "Sudamérica", fifaRank: 1, gdpPC: 10412, pop: 216, hdi: 0.760, gini: 48.9, lifeExp: 76 },
+  { name: "Argentina", flag: "🇦🇷", continent: "Sudamérica", fifaRank: 2, gdpPC: 13650, pop: 46, hdi: 0.842, gini: 41.4, lifeExp: 77 },
+  { name: "Francia", flag: "🇫🇷", continent: "Europa", fifaRank: 3, gdpPC: 44408, pop: 68, hdi: 0.903, gini: 31.6, lifeExp: 83 },
+  { name: "España", flag: "🇪🇸", continent: "Europa", fifaRank: 4, gdpPC: 32280, pop: 48, hdi: 0.905, gini: 33.0, lifeExp: 84 },
+  { name: "Inglaterra", flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿", continent: "Europa", fifaRank: 5, gdpPC: 48913, pop: 56, hdi: 0.929, gini: 35.1, lifeExp: 81 },
+  { name: "Bélgica", flag: "🇧🇪", continent: "Europa", fifaRank: 6, gdpPC: 51767, pop: 12, hdi: 0.937, gini: 27.2, lifeExp: 82 },
+  { name: "Países Bajos", flag: "🇳🇱", continent: "Europa", fifaRank: 7, gdpPC: 57025, pop: 18, hdi: 0.946, gini: 28.1, lifeExp: 82 },
+  { name: "Portugal", flag: "🇵🇹", continent: "Europa", fifaRank: 8, gdpPC: 26780, pop: 10, hdi: 0.866, gini: 33.8, lifeExp: 82 },
+  { name: "Colombia", flag: "🇨🇴", continent: "Sudamérica", fifaRank: 9, gdpPC: 6630, pop: 52, hdi: 0.752, gini: 51.3, lifeExp: 77 },
+  { name: "Italia", flag: "🇮🇹", continent: "Europa", fifaRank: 10, gdpPC: 35657, pop: 59, hdi: 0.895, gini: 32.8, lifeExp: 84 },
+  { name: "Alemania", flag: "🇩🇪", continent: "Europa", fifaRank: 11, gdpPC: 51384, pop: 84, hdi: 0.942, gini: 31.7, lifeExp: 81 },
+  { name: "Uruguay", flag: "🇺🇾", continent: "Sudamérica", fifaRank: 12, gdpPC: 21576, pop: 3.5, hdi: 0.830, gini: 39.7, lifeExp: 78 },
+  { name: "Japón", flag: "🇯🇵", continent: "Asia", fifaRank: 15, gdpPC: 33815, pop: 125, hdi: 0.920, gini: 32.9, lifeExp: 85 },
+  { name: "EE.UU.", flag: "🇺🇸", continent: "Norteamérica", fifaRank: 16, gdpPC: 80035, pop: 334, hdi: 0.921, gini: 39.8, lifeExp: 77 },
+  { name: "México", flag: "🇲🇽", continent: "Norteamérica", fifaRank: 17, gdpPC: 12673, pop: 130, hdi: 0.758, gini: 45.4, lifeExp: 75 },
+  { name: "Senegal", flag: "🇸🇳", continent: "África", fifaRank: 20, gdpPC: 1712, pop: 18, hdi: 0.511, gini: 40.3, lifeExp: 68 },
+  { name: "Corea del Sur", flag: "🇰🇷", continent: "Asia", fifaRank: 22, gdpPC: 32423, pop: 52, hdi: 0.929, gini: 31.4, lifeExp: 84 },
+  { name: "Nigeria", flag: "🇳🇬", continent: "África", fifaRank: 28, gdpPC: 2184, pop: 224, hdi: 0.535, gini: 35.1, lifeExp: 53 },
+  { name: "Australia", flag: "🇦🇺", continent: "Oceanía", fifaRank: 24, gdpPC: 65100, pop: 26, hdi: 0.946, gini: 34.3, lifeExp: 84 },
   { name: "Qatar", flag: "🇶🇦", continent: "Asia", fifaRank: 35, gdpPC: 87662, pop: 2.9, hdi: 0.855, gini: 41.1, lifeExp: 80 },
-  { name: "Saudi Arabia", flag: "🇸🇦", continent: "Asia", fifaRank: 56, gdpPC: 32586, pop: 37, hdi: 0.875, gini: 45.9, lifeExp: 78 },
+  { name: "Arabia Saudita", flag: "🇸🇦", continent: "Asia", fifaRank: 56, gdpPC: 32586, pop: 37, hdi: 0.875, gini: 45.9, lifeExp: 78 },
   { name: "India", flag: "🇮🇳", continent: "Asia", fifaRank: 126, gdpPC: 2612, pop: 1428, hdi: 0.644, gini: 35.2, lifeExp: 68 },
   { name: "China", flag: "🇨🇳", continent: "Asia", fifaRank: 88, gdpPC: 12720, pop: 1412, hdi: 0.788, gini: 38.2, lifeExp: 78 },
-  { name: "Ghana", flag: "🇬🇭", continent: "Africa", fifaRank: 60, gdpPC: 2363, pop: 34, hdi: 0.602, gini: 43.5, lifeExp: 64 },
-  { name: "Costa Rica", flag: "🇨🇷", continent: "North America", fifaRank: 48, gdpPC: 13280, pop: 5.2, hdi: 0.806, gini: 48.2, lifeExp: 80 },
-  { name: "Norway", flag: "🇳🇴", continent: "Europe", fifaRank: 44, gdpPC: 87925, pop: 5.5, hdi: 0.961, gini: 27.6, lifeExp: 83 },
-  { name: "Luxembourg", flag: "🇱🇺", continent: "Europe", fifaRank: 83, gdpPC: 126426, pop: 0.66, hdi: 0.927, gini: 35.4, lifeExp: 83 },
+  { name: "Ghana", flag: "🇬🇭", continent: "África", fifaRank: 60, gdpPC: 2363, pop: 34, hdi: 0.602, gini: 43.5, lifeExp: 64 },
+  { name: "Costa Rica", flag: "🇨🇷", continent: "Norteamérica", fifaRank: 48, gdpPC: 13280, pop: 5.2, hdi: 0.806, gini: 48.2, lifeExp: 80 },
+  { name: "Noruega", flag: "🇳🇴", continent: "Europa", fifaRank: 44, gdpPC: 87925, pop: 5.5, hdi: 0.961, gini: 27.6, lifeExp: 83 },
+  { name: "Luxemburgo", flag: "🇱🇺", continent: "Europa", fifaRank: 83, gdpPC: 126426, pop: 0.66, hdi: 0.927, gini: 35.4, lifeExp: 83 },
 ];
 
 const VARIABLES = [
-  { key: "gdpPC", label: "GDP per Capita", unit: "USD", desc: "The average economic output per person — a measure of how wealthy a country is on average.", color: "#22c55e" },
-  { key: "pop", label: "Population", unit: "millions", desc: "Total number of people living in the country — does having more people mean more talent to choose from?", color: "#f59e0b" },
-  { key: "hdi", label: "Human Development Index", unit: "(0–1)", desc: "A composite measure of health, education, and income — captures quality of life beyond just money.", color: "#8b5cf6" },
-  { key: "gini", label: "Gini Coefficient", unit: "(0–100)", desc: "Measures income inequality — 0 means perfect equality, 100 means one person has everything.", color: "#ef4444" },
-  { key: "lifeExp", label: "Life Expectancy", unit: "years", desc: "Average number of years a person is expected to live — reflects healthcare, nutrition, and living conditions.", color: "#06b6d4" },
+  { key: "gdpPC", label: "PIB per Cápita", unit: "USD", desc: "La producción económica promedio por persona — una medida de qué tan rico es un país en promedio.", color: "#22c55e" },
+  { key: "pop", label: "Población", unit: "millones", desc: "Número total de personas en el país — ¿tener más gente significa más talento para elegir?", color: "#f59e0b" },
+  { key: "hdi", label: "Índice de Desarrollo Humano", unit: "(0–1)", desc: "Un indicador compuesto de salud, educación e ingreso — captura la calidad de vida más allá del dinero.", color: "#8b5cf6" },
+  { key: "gini", label: "Coeficiente de Gini", unit: "(0–100)", desc: "Mide la desigualdad de ingreso — 0 significa igualdad perfecta, 100 significa que una persona tiene todo.", color: "#ef4444" },
+  { key: "lifeExp", label: "Esperanza de Vida", unit: "años", desc: "Número promedio de años que se espera que viva una persona — refleja salud, nutrición y condiciones de vida.", color: "#06b6d4" },
 ];
 
 const CONTINENT_COLORS = {
-  "Europe": "#60a5fa",
-  "South America": "#34d399",
-  "North America": "#f97316",
+  "Europa": "#60a5fa",
+  "Sudamérica": "#34d399",
+  "Norteamérica": "#f97316",
   "Asia": "#facc15",
-  "Africa": "#c084fc",
-  "Oceania": "#fb7185",
+  "África": "#c084fc",
+  "Oceanía": "#fb7185",
 };
 
 const CustomTooltip = ({ active, payload }) => {
@@ -54,10 +54,10 @@ const CustomTooltip = ({ active, payload }) => {
   return (
     <div style={{ background: "#1a1a2e", border: "1px solid #334155", borderRadius: 10, padding: "10px 14px", color: "#e2e8f0", fontSize: 13, lineHeight: 1.6 }}>
       <div style={{ fontWeight: 700, fontSize: 15, marginBottom: 4 }}>{d.flag} {d.name}</div>
-      <div style={{ color: "#94a3b8" }}>FIFA Rank: <span style={{ color: "#4ade80", fontWeight: 600 }}>#{d.fifaRank}</span></div>
-      <div style={{ color: "#94a3b8" }}>GDP/cap: <span style={{ color: "#e2e8f0" }}>${d.gdpPC.toLocaleString()}</span></div>
-      <div style={{ color: "#94a3b8" }}>Pop: <span style={{ color: "#e2e8f0" }}>{d.pop}M</span></div>
-      <div style={{ color: "#94a3b8" }}>HDI: <span style={{ color: "#e2e8f0" }}>{d.hdi}</span></div>
+      <div style={{ color: "#94a3b8" }}>Ranking FIFA: <span style={{ color: "#4ade80", fontWeight: 600 }}>#{d.fifaRank}</span></div>
+      <div style={{ color: "#94a3b8" }}>PIB/cáp: <span style={{ color: "#e2e8f0" }}>${d.gdpPC.toLocaleString()}</span></div>
+      <div style={{ color: "#94a3b8" }}>Pob: <span style={{ color: "#e2e8f0" }}>{d.pop}M</span></div>
+      <div style={{ color: "#94a3b8" }}>IDH: <span style={{ color: "#e2e8f0" }}>{d.hdi}</span></div>
       <div style={{ color: "#94a3b8" }}>Gini: <span style={{ color: "#e2e8f0" }}>{d.gini}</span></div>
     </div>
   );
@@ -106,7 +106,7 @@ export default function FIFAEconomics() {
   }, [chartData]);
 
   const corrColor = Math.abs(correlation) > 0.4 ? (correlation < 0 ? "#4ade80" : "#f87171") : "#fbbf24";
-  const corrLabel = Math.abs(correlation) < 0.2 ? "Very Weak" : Math.abs(correlation) < 0.4 ? "Weak" : Math.abs(correlation) < 0.6 ? "Moderate" : "Strong";
+  const corrLabel = Math.abs(correlation) < 0.2 ? "Muy débil" : Math.abs(correlation) < 0.4 ? "Débil" : Math.abs(correlation) < 0.6 ? "Moderada" : "Fuerte";
 
   return (
     <div style={{
@@ -139,11 +139,11 @@ export default function FIFAEconomics() {
               WebkitTextFillColor: "transparent",
               letterSpacing: "-0.5px",
             }}>
-              ECONOMICS × FIFA
+              ECONOMÍA × FIFA
             </span>
           </div>
           <p style={{ fontSize: 16, color: "#94a3b8", maxWidth: 600, lineHeight: 1.6, margin: 0 }}>
-            Can money buy goals? Explore how a country's economy relates to its football ranking. Pick a variable, spot the patterns, and think like an economist.
+            ¿El dinero compra goles? Explora cómo la economía de un país se relaciona con su ranking en el fútbol. Elige una variable, busca patrones y piensa como economista.
           </p>
         </div>
       </div>
@@ -152,7 +152,7 @@ export default function FIFAEconomics() {
 
         {/* VARIABLE SELECTOR */}
         <div style={{ margin: "32px 0 8px" }}>
-          <div style={{ fontSize: 11, fontWeight: 600, textTransform: "uppercase", letterSpacing: 1.5, color: "#64748b", marginBottom: 12 }}>Choose a macroeconomic variable</div>
+          <div style={{ fontSize: 11, fontWeight: 600, textTransform: "uppercase", letterSpacing: 1.5, color: "#64748b", marginBottom: 12 }}>Elige una variable macroeconómica</div>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
             {VARIABLES.map(v => (
               <button
@@ -197,13 +197,13 @@ export default function FIFAEconomics() {
             display: "inline-flex", alignItems: "center", gap: 8,
             background: "#0f172a", border: "1px solid #334155", borderRadius: 10, padding: "8px 16px",
           }}>
-            <span style={{ fontSize: 12, color: "#94a3b8" }}>Correlation:</span>
+            <span style={{ fontSize: 12, color: "#94a3b8" }}>Correlación:</span>
             <span style={{ fontSize: 18, fontWeight: 800, color: corrColor, fontFamily: "'Anybody', sans-serif" }}>{correlation}</span>
             <span style={{ fontSize: 11, color: corrColor, fontWeight: 600, textTransform: "uppercase" }}>{corrLabel}</span>
           </div>
           <label style={{ display: "flex", alignItems: "center", gap: 6, cursor: "pointer", fontSize: 13, color: "#94a3b8" }}>
             <input type="checkbox" checked={showLabels} onChange={() => setShowLabels(!showLabels)} style={{ accentColor: variable.color }} />
-            Show country labels
+            Mostrar nombres
           </label>
           <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginLeft: "auto" }}>
             {Object.entries(CONTINENT_COLORS).map(([c, col]) => (
@@ -216,7 +216,7 @@ export default function FIFAEconomics() {
 
         {/* TIP */}
         <div style={{ fontSize: 12, color: "#64748b", marginBottom: 8, fontStyle: "italic" }}>
-          ↑ Lower rank = better team. Hover over dots for details.
+          ↑ Menor ranking = mejor equipo. Pasa el cursor sobre los puntos para ver detalles.
         </div>
 
         {/* CHART */}
@@ -243,12 +243,12 @@ export default function FIFAEconomics() {
               <YAxis
                 dataKey="y"
                 type="number"
-                name="FIFA Rank"
+                name="Ranking FIFA"
                 reversed
                 tick={{ fill: "#64748b", fontSize: 11 }}
                 axisLine={{ stroke: "#334155" }}
                 tickLine={{ stroke: "#334155" }}
-                label={{ value: "FIFA Ranking ←  Better", angle: -90, position: "insideLeft", offset: 10, fill: "#94a3b8", fontSize: 13 }}
+                label={{ value: "Ranking FIFA ←  Mejor", angle: -90, position: "insideLeft", offset: 10, fill: "#94a3b8", fontSize: 13 }}
                 domain={[0, 140]}
               />
               <Tooltip content={<CustomTooltip />} cursor={false} />
@@ -289,23 +289,23 @@ export default function FIFAEconomics() {
             marginBottom: 16,
             letterSpacing: "-0.3px"
           }}>
-            🧠 Think Like an Economist
+            🧠 Piensa como economista
           </div>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
             <InsightCard
               emoji="💡"
-              title="Correlation ≠ Causation"
-              text="Even if richer countries rank higher, does money cause better football? Or do other factors (sports culture, investment in youth academies, climate) matter more?"
+              title="Correlación ≠ Causalidad"
+              text="Aunque los países más ricos tengan mejor ranking, ¿el dinero causa mejor fútbol? ¿O hay otros factores (cultura deportiva, inversión en fuerzas básicas, clima) que importan más?"
             />
             <InsightCard
               emoji="🔍"
-              title="Outliers Tell Stories"
-              text="Why does Uruguay (pop. 3.5M) outperform China (1.4B) and India (1.4B)? Why does Qatar rank lower than Senegal despite being 50x richer per capita?"
+              title="Los outliers cuentan historias"
+              text="¿Por qué Uruguay (pob. 3.5M) supera a China (1,400M) e India (1,400M)? ¿Por qué Qatar tiene peor ranking que Senegal siendo 50 veces más rico per cápita?"
             />
             <InsightCard
               emoji="📊"
-              title="Which Variable Wins?"
-              text="Toggle between variables. Which one best predicts FIFA rank? Is it wealth, population, equality, or human development? What does that tell us about sports success?"
+              title="¿Qué variable gana?"
+              text="Cambia entre variables. ¿Cuál predice mejor el ranking FIFA? ¿La riqueza, la población, la igualdad o el desarrollo humano? ¿Qué nos dice eso sobre el éxito deportivo?"
             />
           </div>
         </div>
@@ -316,13 +316,13 @@ export default function FIFAEconomics() {
             cursor: "pointer", fontWeight: 600, fontSize: 14, color: "#94a3b8", padding: "10px 0",
             borderBottom: "1px solid #1e293b", userSelect: "none",
           }}>
-            📋 View all country data ({COUNTRIES.length} countries)
+            📋 Ver datos de todos los países ({COUNTRIES.length} países)
           </summary>
           <div style={{ overflowX: "auto", marginTop: 12 }}>
             <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 12 }}>
               <thead>
                 <tr style={{ borderBottom: "2px solid #334155" }}>
-                  {["", "Country", "FIFA", "GDP/cap", "Pop (M)", "HDI", "Gini", "Life Exp"].map(h => (
+                  {["", "País", "FIFA", "PIB/cáp", "Pob (M)", "IDH", "Gini", "Esp. Vida"].map(h => (
                     <th key={h} style={{ padding: "8px 10px", textAlign: "left", color: "#64748b", fontWeight: 600, whiteSpace: "nowrap" }}>{h}</th>
                   ))}
                 </tr>
@@ -349,7 +349,7 @@ export default function FIFAEconomics() {
           textAlign: "center", fontSize: 11, color: "#475569", padding: "20px 0 0",
           borderTop: "1px solid #1e293b",
         }}>
-          Data: FIFA Rankings (approximate, 2024) · World Bank · UNDP · For educational demonstration purposes
+          Datos: Rankings FIFA (aprox. 2024) · Banco Mundial · PNUD · Para fines educativos
         </div>
       </div>
     </div>

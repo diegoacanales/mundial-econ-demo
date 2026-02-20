@@ -433,7 +433,7 @@ export default function PrediccionMundial() {
         </div>
 
         <div style={{ textAlign: "center", fontSize: 10, color: "#334155", borderTop: "1px solid #1e293b", padding: "20px 0 0" }}>
-          Modelo educativo · FIFA Rankings (Jan 2026) · World Bank · UNDP · Tec de Monterrey
+          Modelo educativo · Rankings FIFA (ene 2026) · Banco Mundial · PNUD · Tec de Monterrey
         </div>
       </div>
     </div>
